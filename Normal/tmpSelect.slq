@@ -1,5 +1,3 @@
 update crm_app_3.phone_number c set c.status_cd=1001 where c.phone_number in('xx','xx');
 
 select * from crm_lte_3.phone_number c where c.phone_number in ('xx','xx');
-
-test git 
