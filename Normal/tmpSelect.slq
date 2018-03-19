@@ -1,3 +1,7 @@
 update crm_app_3.phone_number c set c.status_cd=1001 where c.phone_number in('xx','xx');
 
+-- 电话号码查询
 select * from crm_lte_3.phone_number c where c.phone_number in ('xx','xx');
+
+-- 定时任务查询
+select * from crm_lte.res_task_inst c where c.status_cd = 'ERR' or c.status_cd = 'ING' order by c.update_date desc;
