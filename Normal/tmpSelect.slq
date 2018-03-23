@@ -5,3 +5,32 @@ select * from crm_lte_3.phone_number c where c.phone_number in ('xx','xx');
 
 -- 定时任务查询
 select * from crm_lte.res_task_inst c where c.status_cd = 'ERR' or c.status_cd = 'ING' order by c.update_date desc;
+
+
+-- csb 横向接口查询 日志调用
+select * from op2_dep.contract_interaction c where c.contract_version='SVC8006420150627'
+       and c.create_time>=to_date('2018/03/19 10:40:57', 'yyyy-MM-dd HH24:MI:SS')
+       and c.create_time<=to_date('2018/03/19 10:40:59', 'yyyy-MM-dd HH24:MI:SS')
+       and c.response_code='0000'
+       and c.src_org_code = '600101'
+
+
+-- 江苏南京号码预占与释放接口
+
+-- 17751012141
+
+select * from crm_app_2.phone_number c where c.phone_number='17751012141';
+
+select * from crm_app_2.phone_number c where c.status_cd='1001' and c.area_id='8320100' and c.pool_id='8320100'; -- 本地网
+
+select * from crm_app_2.channel_pnPool_rela c where c.pool_id='8320100';
+
+select * from crm_app_2.common_region c where c.region_name='南京市';
+
+-- 预占与释放接口日志记录流水信息
+select * from crm_lte_2.MKT_RES_PHONENBR_LOG c where c.phone_number='17751012141'
+
+-- 号码预占表
+select * from crm_lte_2.MKT_RES_INST_PRE c where c.inst_code='17751012141';
+
+update crm_lte_2.MKT_RES_INST_PRE c set c.op_tran_id='011022033044' where c.inst_code='17751012141';
