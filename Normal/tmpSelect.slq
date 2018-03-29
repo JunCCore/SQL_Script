@@ -8,7 +8,6 @@ select * from crm_lte.res_task_inst c where c.status_cd = 'ERR' or c.status_cd =
 
 
 -- csb 横向接口查询 日志调用
-
 select * from op2_dep.contract_interaction c where c.contract_version='SVC8006420150627'
        and c.create_time>=to_date('2018/03/19 10:40:57', 'yyyy-MM-dd HH24:MI:SS')
        and c.create_time<=to_date('2018/03/19 10:40:59', 'yyyy-MM-dd HH24:MI:SS')
@@ -35,3 +34,6 @@ select * from crm_lte_2.MKT_RES_PHONENBR_LOG c where c.phone_number='17751012141
 select * from crm_lte_2.MKT_RES_INST_PRE c where c.inst_code='17751012141';
 
 update crm_lte_2.MKT_RES_INST_PRE c set c.op_tran_id='011022033044' where c.inst_code='17751012141';
+
+-- 分页查询语句
+SELECT * FROM  (SELECT ROWNUM RNUM, V.* FROM (SELECT * FROM crm_lte.phone_number ) V WHERE ROWNUM <= 200) WHERE RNUM >= 100;
