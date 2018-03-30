@@ -33,3 +33,24 @@ update crm_lte_2.MKT_RES_INST_PRE c set c.op_tran_id='011022033044' where c.inst
 
 -- 分页查询语句
 SELECT * FROM  (SELECT ROWNUM RNUM, V.* FROM (SELECT * FROM crm_lte.phone_number ) V WHERE ROWNUM <= 200) WHERE RNUM >= 100;
+
+
+-- 混配规则
+混配规则
+
+SELECT 1
+      FROM PN_IMSI_RULE PIR
+     WHERE #{phoneNumber,jdbcType=VARCHAR} like PIR.PN_RANGE||'%'
+       AND PIR.C_IMSI_RANGE = SUBSTR(#{imsi,jdbcType=VARCHAR}, 1, 11)
+    UNION ALL
+    SELECT 1
+      FROM PN_IMSI_RULE PIR
+     WHERE PIR.PN_RANGE = '0000000'
+       AND PIR.PN_HEAD = SUBSTR(#{phoneNumber,jdbcType=VARCHAR}, 0, 3)
+       AND PIR.C_IMSI_RANGE = SUBSTR(#{imsi,jdbcType=VARCHAR}, 1, 11)
+    UNION ALL
+    SELECT 1
+      FROM PN_IMSI_RULE PIR
+     WHERE PIR.PN_RANGE = '0000000'
+       AND PIR.PN_HEAD = '000'
+       AND PIR.C_IMSI_RANGE = SUBSTR(#{imsi,jdbcType=VARCHAR}, 1, 11)
