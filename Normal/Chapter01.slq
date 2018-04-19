@@ -36,7 +36,6 @@ SELECT * FROM  (SELECT ROWNUM RNUM, V.* FROM (SELECT * FROM crm_lte.phone_number
 
 
 -- 混配规则
-混配规则
 
 SELECT 1
       FROM PN_IMSI_RULE PIR
@@ -54,3 +53,7 @@ SELECT 1
      WHERE PIR.PN_RANGE = '0000000'
        AND PIR.PN_HEAD = '000'
        AND PIR.C_IMSI_RANGE = SUBSTR(#{imsi,jdbcType=VARCHAR}, 1, 11)
+
+
+       -- 8120100 - 8120200  查询排序之后不连续的部分
+     select id1, id2 from (SELECT pool_id id1, lead(pool_id,1) over (order by pool_id) as id2 from crm_lte.phone_nbr_pool) where id2-id1>1;
